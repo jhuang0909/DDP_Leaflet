@@ -1,35 +1,30 @@
 ---
-title: "NPS"
-author: "Jin Huang"
-date: "March 31, 2017"
-output: ioslides_presentation
+output:
+  html_document: default
+  pdf_document: default
 ---
-
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+library(leaflet)
+library(RCurl)
 ```
 
-## R Markdown
+## The National Parks: America's Best Idea
+`r Sys.Date()`
+```{r}
+nps <- read.csv(url("http://www.arcgis.com/sharing/rest/content/items/79f3f48214d244c58595aa4d3f690bab/data"))
+colnames(nps)[names(nps) == "Latitude"] <- "lat"
+colnames(nps)[names(nps) == "Longitude"] <- "lng"
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+npsIcon <- makeIcon(
+  iconUrl = "https://www.nps.gov/common/commonspot/templates/assetsCT/images/branding/logo.png",
+  iconWidth = 20*215/230, iconHeight = 20,
+  iconAnchorX = 20*215/230/2, iconAnchorY = 10
+)
+npsSites <- paste0("<a href='",nps$NPS_URL,"'>",nps$Name,"</a>")
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
-
-## Slide with Bullets
-http://www.arcgis.com/sharing/rest/content/items/79f3f48214d244c58595aa4d3f690bab/data
-- Bullet 1
-- Bullet 2
-- Bullet 3
-
-## Slide with R Output
-
-```{r cars, echo = TRUE}
-summary(cars)
+nps %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = npsIcon, popup = npsSites)
 ```
-
-## Slide with Plot
-
-```{r pressure}
-plot(pressure)
-```
-
