@@ -1,5 +1,5 @@
 ---
-title: "The National Parks: America's Best Idea"
+title: "National Parks: America's Best Idea"
 output:
   html_document: default
   pdf_document: default
