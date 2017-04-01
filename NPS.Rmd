@@ -1,4 +1,5 @@
 ---
+title: "The National Parks: America's Best Idea"
 output:
   html_document: default
   pdf_document: default
@@ -9,7 +10,7 @@ library(leaflet)
 library(RCurl)
 ```
 
-## The National Parks: America's Best Idea
+## 
 `r Sys.Date()`
 ```{r}
 nps <- read.csv(url("http://www.arcgis.com/sharing/rest/content/items/79f3f48214d244c58595aa4d3f690bab/data"))
